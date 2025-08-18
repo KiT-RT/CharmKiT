@@ -11,9 +11,6 @@ from src.general_utils import (
     delete_slurm_scripts,
 )
 
-# url = "http://localhost:4243"
-# model = umbridge.HTTPModel(url, "forward")
-
 from src.general_utils import parse_args
 
 
@@ -32,31 +29,16 @@ def main():
 
     # --- Define parameter ranges ---
 
-    #  characteristic length of the cells
-    parameter_range_n_cell = [
-        # 0.05,
-        # 0.025,
-        # 0.01,
-        # 0.0075,
-        # 0.005,
-        0.0025,
-        # 0.001,
-        # 0.00075,
-        # 0.0005,
-    ]
+    #  characteristic length of the cells:  #grid cells = O(1/cell_size^2)
+    parameter_range_grid_cell_size = [0.015]
 
-    # quadrature order (must be an even number)
+    # quadrature order (must be an even number):  #velocity grid cells = O(order^2)
+    parameter_range_quad_order = [6]
 
-    parameter_range_quad_order = [
-        4
-    ]  # [4, 8, 12, 16, 20, 24, 28,32,40,48,56,64,72,80]  # [4, 8, 12, 16, 20, 24, 28]
-
-    parameter_range_abs_blue = [
-        10
-    ]  # [0, 5, 10, 50, 100]  # Prescribed range for LATTICE_DSGN_ABSORPTION_BLUE
-    parameter_range_scatter_white = [
-        1
-    ]  # [0, 0.5, 1, 5, 10]  # Prescribed range for LATTICE_DSGN_ABSORPTION_BLUE
+    # Prescribed range for LATTICE_DSGN_ABSORPTION_BLUE
+    parameter_range_abs_blue = [5, 10, 50, 100]  # default: 10
+    # Prescribed range for LATTICE_DSGN_SCATTER_WHITE
+    parameter_range_scatter_white = [0.1, 0.5, 1, 5, 10]  # default: 1
 
     if load_from_npz:  # TODO
         raise NotImplementedError
@@ -66,7 +48,7 @@ def main():
         exit("TODO")
     else:
         design_params, design_param_names = create_lattice_samples_from_param_range(
-            parameter_range_n_cell,
+            parameter_range_grid_cell_size,
             parameter_range_quad_order,
             parameter_range_abs_blue,
             parameter_range_scatter_white,

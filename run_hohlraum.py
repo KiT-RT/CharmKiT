@@ -24,31 +24,29 @@ def main():
 
     # --- Define parameter ranges ---
 
-    #  characteristic length of the cells
-    parameter_range_n_cell = [
-        # 0.007,
-        # 0.0135,
-        0.02,
-    ]
-    # quadrature order (must be an even number)
-    parameter_range_quad_order = [4]
+    #  characteristic length of the cells:  #grid cells = O(1/cell_size^2)
+    parameter_range_grid_cell_size = [0.0075]
+
+    # quadrature order (must be an even number):  #velocity grid cells = O(order^2)
+    parameter_range_quad_order = [6]
+    # balance the two roughly (see Paper Fig 6)
 
     # Define the geometry settings of the test case
 
-    parameter_range_green_center_x = [0.0]  # [0.0, 0.01, -0.01]
-    parameter_range_green_center_y = [0.0]  # [0.0, 0.01, -0.01]
-    parameter_range_red_right_top = [0.4]  # [0.4, 0.45, 0.35]
-    parameter_range_red_right_bottom = [-0.4]  # [-0.4, -0.45, -0.35]
-    parameter_range_red_left_top = [0.4]  # [0.4, 0.45, 0.35]
-    parameter_range_red_left_bottom = [-0.4]  # [-0.4, -0.45, -0.35]
-    parameter_range_horizontal_left = [-0.6]  # [-0.6, -0.61, -0.59]
-    parameter_range_horizontal_right = [0.6]  # [0.6, 0.61, 0.59]
+    parameter_range_green_center_x = [-0.1, 0.0, 0.1]  # Default: 0
+    parameter_range_green_center_y = [-0.075, 0.0, 0.075]  # Default: 0
+    parameter_range_red_right_top = [0.3, 0.4, 0.5]  # Default: 0.4
+    parameter_range_red_right_bottom = [-0.5, -0.4, -0.3]  # Default: -0.4
+    parameter_range_red_left_top = [0.3, 0.4, 0.5]  # Default: 0.4
+    parameter_range_red_left_bottom = [-0.5, -0.4, -0.3]  # Default: -0.4
+    parameter_range_horizontal_left = [-0.63, -0.6, -0.5]  # Default: -0.6
+    parameter_range_horizontal_right = [0.5, 0.6, 0.63]  # Default: 0.6
 
     if load_from_npz:
         design_params, design_param_names = load_hohlraum_samples_from_csv()
     else:
         design_params, design_param_names = create_hohlraum_samples_from_param_range(
-            parameter_range_n_cell,
+            parameter_range_grid_cell_size,
             parameter_range_quad_order,
             parameter_range_green_center_x,
             parameter_range_green_center_y,
