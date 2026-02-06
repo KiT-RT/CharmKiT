@@ -1,5 +1,5 @@
 # clone KiT-RT
-git clone git@github.com:CSMMLab/KiT-RT.git
+git clone https://github.com/KiT-RT/CharmKiT.git
 # go to KiT-RT directory
 cd KiT-RT
 
